@@ -1,7 +1,24 @@
 <main class="h-screen p-2">
-  <div class="flex gap-6 items-center justify-center h-full">
+
+  <header class="flex justify-end">
+    <div class="flex flex-col items-center">
+
+      <!-- Two-way binding : [(search)] 
+         One-way binding : [search] or [ngModel]
+         Event binding : (searchButtonClicked) 
+    -->
+      <app-search-bar (submit)="incrementCount()" [(search)]="searchText">
+      </app-search-bar>
+      <div class="flex gap-4">
+        <p>Click count : {{count}}</p>
+        <p>Search text : {{searchText}}</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="flex gap-6 items-center justify-center h-full">
     <app-collection-item-card></app-collection-item-card>
     <app-collection-item-card [item]="coin"></app-collection-item-card>
-  </div>
+  </section>
 
 </main>
