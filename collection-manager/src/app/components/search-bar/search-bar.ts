@@ -1,4 +1,4 @@
-import { Component, output, OutputEmitterRef, model } from '@angular/core';
+import { Component, output, OutputEmitterRef, model, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 // Models: la fonction model est un input et un output à la fois (two-way binding )
@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-search-bar',
   imports: [FormsModule],
   templateUrl: './search-bar.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBar {
 

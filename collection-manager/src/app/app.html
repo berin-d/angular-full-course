@@ -17,8 +17,20 @@
   </header>
 
   <section class="flex gap-6 items-center justify-center h-full">
-    <app-collection-item-card></app-collection-item-card>
-    <app-collection-item-card [item]="coin"></app-collection-item-card>
+    <app-collection-item-card [item]="selectedItem()"></app-collection-item-card>
   </section>
+
+  <div>
+    <p class="text-center text-sm text-gray-500">
+      {{ selectedItemIndex()+1}} out of {{ itemList.length }} items have been clicked
+    </p>
+  </div>
+
+  <div class="flex w-full items-center justify-center p-4">
+    <button
+      class="border p-2 rounded-lg hover:cursor-pointer bg-blue-500 text-amber-100 hover:bg-blue-600 hover:scale-105 transition-all duration-300"
+      (click)="incrementIndex()">Toggle</button>
+  </div>
+
 
 </main>
