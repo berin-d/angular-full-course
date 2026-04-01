@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, model, signal } from '@angular/core';
 import { CollectionItemCard } from './components/collection-item-card/collection-item-card';
 import { CollectionItem } from './models/collection-item';
 import { SearchBar } from "./components/search-bar/search-bar";
+import { Collection } from './models/collection';
 
 
 @Component({
@@ -12,24 +13,22 @@ import { SearchBar } from "./components/search-bar/search-bar";
 })
 export class App {
 
-  count = 0;
-  searchText = "";
+
+  searchText = model("");
 
   greenSlime: CollectionItem;
   pinkSlime: CollectionItem;
   blueSlime: CollectionItem;
 
-  itemList: CollectionItem[] = [];
-
-  // Signals
-  selectedItemIndex = signal(0);
-
-  selectedItem = computed(() => { return this.itemList[this.selectedItemIndex()]; });
-
-  logEffect = effect(() => {
-    console.log(`Selected item index: ${this.selectedItemIndex()}`);
-    console.log(this.selectedItem())
+  selectedCollection = signal<Collection | null>(null);
+  collectionItems = computed(() => {
+    const allItems = this.selectedCollection()?.items ?? [];
+    return allItems.filter(item => item.name.toLowerCase().includes(this.searchText().toLocaleLowerCase()));
   });
+
+
+
+
 
   constructor() {
     // 1st item
@@ -51,21 +50,15 @@ export class App {
     // 3rd item
     this.greenSlime = new CollectionItem();
 
-    this.itemList = [
-      this.pinkSlime,
-      this.blueSlime,
-      this.greenSlime
-    ]
+
+
+    const defaultCollection = new Collection();
+    defaultCollection.title = "My Slime Collection";
+    defaultCollection.items.push(this.greenSlime, this.pinkSlime, this.blueSlime);
+
+    this.selectedCollection.set(defaultCollection);
+
+
   }
 
-
-  incrementCount() {
-    this.count++;
-  }
-
-
-  incrementIndex() {
-    const currentValue = this.selectedItemIndex();
-    this.selectedItemIndex.set((currentValue + 1) % this.itemList.length);
-  }
 }

@@ -1,36 +1,68 @@
 <main class="h-screen p-2">
-
   <header class="flex justify-end">
-    <div class="flex flex-col items-center">
-
-      <!-- Two-way binding : [(search)] 
-         One-way binding : [search] or [ngModel]
-         Event binding : (searchButtonClicked) 
-    -->
-      <app-search-bar (submit)="incrementCount()" [(search)]="searchText">
-      </app-search-bar>
-      <div class="flex gap-4">
-        <p>Click count : {{count}}</p>
-        <p>Search text : {{searchText}}</p>
-      </div>
-    </div>
+    <app-search-bar [(search)]="searchText"></app-search-bar>
   </header>
 
   <section class="flex gap-6 items-center justify-center h-full">
-    <app-collection-item-card [item]="selectedItem()"></app-collection-item-card>
+    <!-- 1) Solution avec @empty -->
+    @for (item of collectionItems(); track item.name) {
+      @switch (item.rarity) {
+        @case ('Common') {
+          <div>
+            <app-collection-item-card [item]="item"></app-collection-item-card>
+            <hr class="border-gray-300 my-4 border-2 rounded-lg" />
+          </div>
+        }
+        @case ('Rare') {
+          <div>
+            <app-collection-item-card [item]="item"></app-collection-item-card>
+            <hr class="border-emerald-300 my-4 border-2 rounded-lg" />
+          </div>
+        }
+        @case ('Epic') {
+          <div>
+            <app-collection-item-card [item]="item"></app-collection-item-card>
+            <hr class="border-purple-300 my-4 border-2 rounded-lg" />
+          </div>
+        }
+        @case ('Legendary') {
+          <div>
+            <app-collection-item-card [item]="item"></app-collection-item-card>
+            <hr class="border-yellow-300 my-4 border-2 rounded-lg" />
+          </div>
+        }
+        @default {
+          <app-collection-item-card [item]="item"></app-collection-item-card>
+        }
+      }
+    } @empty {
+      <p class="text-gray-500 text-sm">No items found.</p>
+    }
   </section>
 
-  <div>
+  <!-- 2) Solution avec @let, @if, @else -->
+
+  <!-- 
+  @let itemsCount = collectionItems().length
+  @if(itemsCount > 0) {
     <p class="text-center text-sm text-gray-500">
-      {{ selectedItemIndex()+1}} out of {{ itemList.length }} items have been clicked
+      Found {itemsCount} {itemsCount === 1 ? 'item' : 'items'}.
     </p>
+  } else {
+    <p class="text-center text-sm text-gray-500">
+      No items found.
+    </p>
+  }
+  -->
+  <div>
+    <p class="text-center text-sm text-gray-500"></p>
   </div>
 
   <div class="flex w-full items-center justify-center p-4">
     <button
       class="border p-2 rounded-lg hover:cursor-pointer bg-blue-500 text-amber-100 hover:bg-blue-600 hover:scale-105 transition-all duration-300"
-      (click)="incrementIndex()">Toggle</button>
+    >
+      Toggle
+    </button>
   </div>
-
-
 </main>
