@@ -1,9 +1,9 @@
-<main class="h-screen p-2">
+<main class="flex flex-col h-screen p-2">
   <header class="flex justify-end">
     <app-search-bar [(search)]="searchText"></app-search-bar>
   </header>
 
-  <section class="flex gap-6 items-center justify-center h-full">
+  <section class="flex gap-6 items-center justify-center flex-1 flex-wrap">
     <!-- 1) Solution avec @empty -->
     @for (item of collectionItems(); track item.name) {
       @switch (item.rarity) {
@@ -59,10 +59,9 @@
   </div>
 
   <div class="flex w-full items-center justify-center p-4">
-    <button
-      class="border p-2 rounded-lg hover:cursor-pointer bg-blue-500 text-amber-100 hover:bg-blue-600 hover:scale-105 transition-all duration-300"
-    >
-      Toggle
+    <button (click)="addGenericItem()" class="border p-2 rounded-lg hover:cursor-pointer bg-green-500 text-amber-100 hover:bg-green-600 hover:scale-105 transition-all duration-300">
+      Add generic item
+
     </button>
   </div>
 </main>
