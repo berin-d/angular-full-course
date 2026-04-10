@@ -1,0 +1,11 @@
+@if (itemId()) {
+  Item {{ itemId() }} !
+  <button
+    class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-white border border-blue-500 rounded-xl p-2 hover:cursor-pointer"
+    (click)="next()"
+  >
+    Next
+  </button>
+} @else {
+  New item !
+}
