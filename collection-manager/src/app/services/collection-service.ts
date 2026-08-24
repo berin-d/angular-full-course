@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Collection } from '../models/collection';
-import { CollectionItem } from '../models/collection-item';
+import { CollectionItem, Rarities } from '../models/collection-item';
 
 @Injectable({
   providedIn: 'root',
@@ -16,22 +16,30 @@ export class CollectionService {
 
   generateDummyData() {
     const pinkSlime = new CollectionItem();
+    pinkSlime.id = 1;
     pinkSlime.name = 'Pink Slime';
     pinkSlime.description = 'A pink slime';
-    pinkSlime.rarity = 'Rare';
+    pinkSlime.rarity = Rarities.Uncommon;
     pinkSlime.image = 'img/pngegg-pink.png';
     pinkSlime.price = 149;
 
     // 2nd item
     const blueSlime = new CollectionItem();
+    blueSlime.id = 2;
     blueSlime.name = 'Blue Slime';
     blueSlime.description = 'A blue slime';
-    blueSlime.rarity = 'Common';
+    blueSlime.rarity = Rarities.Common;
     blueSlime.image = 'img/pngegg-blue.png';
     blueSlime.price = 49;
 
     // 3rd item
     const greenSlime = new CollectionItem();
+    greenSlime.id = 3;
+    greenSlime.name = 'Green Slime';
+    greenSlime.description = 'A green slime';
+    greenSlime.rarity = Rarities.Rare;
+    greenSlime.image = 'img/pngegg-green.png';
+    greenSlime.price = 199;
 
     const defaultCollection = new Collection();
     defaultCollection.title = 'My Slime Collection';
@@ -75,12 +83,16 @@ export class CollectionService {
     this.collection = this.collection.filter((c) => c.id !== collectionId);
   }
 
-  addItem(collection: Collection, item: CollectionItem) {
+  addItem(collection: Collection, item: CollectionItem): Collection | null {
     const storedCollection = this.collection.find((c) => c.id === collection.id);
 
     if (!storedCollection) return null;
 
-    storedCollection.items.push(item.copy());
+    const storedItem = item.copy();
+    storedItem.id = this.currentItemIndex[storedCollection.id];
+    this.currentItemIndex[storedCollection.id]++;
+
+    storedCollection.items.push(storedItem);
     return storedCollection.copy();
   }
 

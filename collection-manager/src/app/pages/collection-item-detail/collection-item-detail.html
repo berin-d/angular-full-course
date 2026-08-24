@@ -1,11 +1,110 @@
-@if (itemId()) {
-  Item {{ itemId() }} !
-  <button
-    class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-white border border-blue-500 rounded-xl p-2 hover:cursor-pointer"
-    (click)="next()"
-  >
-    Next
-  </button>
-} @else {
-  New item !
-}
+<div class="flex justify-center gap-2 items-center">
+  <app-collection-item-card [item]="collectionItem()"></app-collection-item-card>
+
+  <form [formGroup]="itemFormGroup" (submit)="submit($event)">
+    <div class="flex flex-col gap-2">
+      <div>
+        <label for="name">Name:</label>
+        <input
+          id="name"
+          formControlName="name"
+          class="border bg-white border-gray-300 rounded p-2 w-full"
+          [class.border-red-500]="
+            itemFormGroup.controls.name.invalid && itemFormGroup.controls.name.touched
+          "
+        />
+        @if (isFieldValid('name')) {
+          <p class="text-red-500 text-sm">Name is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="price">Price:</label>
+        <input
+          id="price"
+          formControlName="price"
+          class="border bg-white border-gray-300 rounded p-2 w-full"
+          [class.border-red-500]="itemFormGroup.controls.price.invalid"
+          type="number"
+          step="0.01"
+        />
+        @if (isFieldValid('price')) {
+          @let priceFC = itemFormGroup.get('price');
+          @if (priceFC?.hasError('min')) {
+            <p class="text-red-500 text-sm">This value must be bigger or equal to 0.</p>
+          } @else {
+            <p class="text-red-500 text-sm">Price is required.</p>
+          }
+        }
+      </div>
+
+      <div>
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="border bg-white border-gray-300 rounded p-2 w-full"
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="rarity">Rarity:</label>
+        <select
+          id="rarity"
+          formControlName="rarity"
+          class="border bg-white border-gray-300 rounded p-2 w-full"
+        >
+          @for (rarity of rarities; track rarity) {
+            <option [value]="rarity">{{ rarity }}</option>
+          }
+        </select>
+      </div>
+
+      <div>
+        <label for="image">Image:</label>
+        <input
+          id="image"
+          type="file"
+          (change)="onFileChanged($event)"
+          class="border bg-white border-gray-300 rounded p-2 w-full"
+        />
+        @if (isFieldValid('image')) {
+          <p class="text-red-500 text-sm">Image is required.</p>
+        }
+      </div>
+
+      <div class="flex gap-2">
+        @if (itemId() !== null) {
+          <button
+            type="button"
+            (click)="save()"
+            [disabled]="itemFormGroup.invalid"
+            class="bg-white p-2 border border-gray-500 rounded-xl hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Save
+          </button>
+
+          <button
+            type="button"
+            (click)="delete()"
+            class="bg-white p-2 border border-gray-500 rounded-xl hover:cursor-pointer"
+          >
+            delete
+          </button>
+
+          <button (click)="cancel()" class="bg-white p-2 border border-gray-500 rounded-xl hover:cursor-pointer">
+            cancel
+          </button>
+        } @else {
+          <button
+            type="submit"
+            [disabled]="itemFormGroup.invalid"
+            class="bg-white p-2 border border-gray-500 rounded-xl hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Create
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+</div>

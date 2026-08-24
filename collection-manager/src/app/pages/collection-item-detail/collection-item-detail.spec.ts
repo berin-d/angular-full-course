@@ -19,4 +19,13 @@ describe('CollectionItemDetail', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('should render form', async () => {
+    const fixture = TestBed.createComponent(CollectionItemDetail);
+    await fixture.whenStable();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('form')).toBeTruthy();
+  });
+
 });

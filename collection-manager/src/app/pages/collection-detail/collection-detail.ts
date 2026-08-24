@@ -2,27 +2,30 @@ import { Component, computed, inject, model, signal } from '@angular/core';
 import { CollectionService } from '../../services/collection-service';
 import { Collection } from '../../models/collection';
 import { CollectionItem } from '../../models/collection-item';
-import { CollectionItemCard } from "../../components/collection-item-card/collection-item-card";
-import { SearchBar } from "../../components/search-bar/search-bar";
+import { CollectionItemCard } from '../../components/collection-item-card/collection-item-card';
+import { SearchBar } from '../../components/search-bar/search-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-collection-detail',
   imports: [CollectionItemCard, SearchBar],
   templateUrl: './collection-detail.html',
-  styleUrl: './collection-detail.css',
 })
 export class CollectionDetail {
-  
+  private router = inject(Router);
+
   private collectionService = inject(CollectionService);
 
-  searchText = model('');
+  searchText = model(' ');
 
   selectedCollection = signal<Collection | null>(null);
+
   collectionItems = computed(() => {
     const allItems = this.selectedCollection()?.items ?? [];
-    return allItems.filter((item) =>
-      item.name.toLowerCase().includes(this.searchText().toLocaleLowerCase()),
-    );
+
+    const search = (this.searchText() || '').toLocaleLowerCase();
+
+    return allItems.filter((item) => (item.name || '').toLowerCase().includes(search));
   });
 
   constructor() {
@@ -32,11 +35,11 @@ export class CollectionDetail {
     }
   }
 
-  addGenericItem() {
-    const collection = this.selectedCollection();
-    if (collection) {
-      const storedCollection = this.collectionService.addItem(collection, new CollectionItem());
-      this.selectedCollection.set(storedCollection);
-    }
-  }  
+  addNewItem() {
+    this.router.navigate(['/item']);
+  }
+
+  updateItem(id: number) {
+    this.router.navigate(['/item', id]);
+  }
 }

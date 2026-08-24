@@ -8,62 +8,55 @@
     @for (item of collectionItems(); track item.name) {
       @switch (item.rarity) {
         @case ('Common') {
-          <div>
+          <div (click)="updateItem(item.id)">
             <app-collection-item-card [item]="item"></app-collection-item-card>
             <hr class="border-gray-300 my-4 border-2 rounded-lg" />
           </div>
         }
         @case ('Rare') {
-          <div>
+          <div (click)="updateItem(item.id)">
             <app-collection-item-card [item]="item"></app-collection-item-card>
             <hr class="border-emerald-300 my-4 border-2 rounded-lg" />
           </div>
         }
         @case ('Epic') {
-          <div>
+          <div (click)="updateItem(item.id)">
             <app-collection-item-card [item]="item"></app-collection-item-card>
             <hr class="border-purple-300 my-4 border-2 rounded-lg" />
           </div>
         }
         @case ('Legendary') {
-          <div>
+          <div (click)="updateItem(item.id)">
             <app-collection-item-card [item]="item"></app-collection-item-card>
             <hr class="border-yellow-300 my-4 border-2 rounded-lg" />
           </div>
         }
         @default {
-          <app-collection-item-card [item]="item"></app-collection-item-card>
+          <div (click)="updateItem(item.id)">
+            <app-collection-item-card [item]="item"></app-collection-item-card>
+            <hr class="border-gray-100 my-4 border-2 rounded-lg" />
+          </div>
         }
       }
     } @empty {
       <p class="text-gray-500 text-sm">No items found.</p>
     }
+
+    <div>
+      <div
+        class="flex items-center text-emerald-500 justify-center rounded-2xl border-3 border-dashed border-emerald-500 w-3xs h-82 hover:cursor-pointer hover:scale-101 transition-all duration-300"
+        (click)="addNewItem()"
+      >
+        <div
+          class="flex items-center justify-center p-6 border-2 border-dashed border-emerald-500 rounded-full size-6"
+        >
+          <span class="text-emerald-500 font-bold">+</span>
+        </div>
+      </div>
+      <hr class="my-4 border-none" />
+    </div>
   </section>
-
-  <!-- 2) Solution avec @let, @if, @else -->
-
-  <!-- 
-  @let itemsCount = collectionItems().length
-  @if(itemsCount > 0) {
-    <p class="text-center text-sm text-gray-500">
-      Found {itemsCount} {itemsCount === 1 ? 'item' : 'items'}.
-    </p>
-  } else {
-    <p class="text-center text-sm text-gray-500">
-      No items found.
-    </p>
-  }
-  -->
   <div>
     <p class="text-center text-sm text-gray-500"></p>
-  </div>
-
-  <div class="flex w-full items-center justify-center p-4">
-    <button
-      (click)="addGenericItem()"
-      class="border p-2 rounded-lg hover:cursor-pointer bg-green-500 text-amber-100 hover:bg-green-600 hover:scale-105 transition-all duration-300"
-    >
-      Add generic item
-    </button>
   </div>
 </main>
