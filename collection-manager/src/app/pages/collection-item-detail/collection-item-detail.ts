@@ -65,14 +65,6 @@ export class CollectionItemDetail implements OnDestroy {
     });
   }
 
-  next() {
-    const currentId = this.itemId();
-    if (currentId) {
-      const nextId = currentId + 1;
-      this.router.navigate(['/item', nextId]);
-    }
-  }
-
   submit(event: Event) {
     event.preventDefault();
     this.collectionService.addItem(this.selectedCollection, this.collectionItem());
