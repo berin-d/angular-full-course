@@ -12,10 +12,21 @@ import { CollectionService } from '../../services/collection-service';
 import { Collection } from '../../models/collection';
 import { Subscription } from 'rxjs';
 import { CollectionItemCard } from '../../components/collection-item-card/collection-item-card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-collection-item-detail',
-  imports: [ReactiveFormsModule, CollectionItemCard],
+  imports:  [
+    ReactiveFormsModule,
+    CollectionItemCard,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
   templateUrl: './collection-item-detail.html',
 })
 export class CollectionItemDetail implements OnDestroy {
@@ -68,7 +79,6 @@ export class CollectionItemDetail implements OnDestroy {
   submit(event: Event) {
     event.preventDefault();
     this.collectionService.addItem(this.selectedCollection, this.collectionItem());
-    setTimeout(() => this.cancel(), 100);
   }
 
   delete() {
@@ -80,7 +90,6 @@ export class CollectionItemDetail implements OnDestroy {
 
   save() {
     if (this.itemId() !== null) {
-      console.log('Saving item', this.collectionItem(), 'in collection', this.selectedCollection);
       this.collectionService.updateItem(this.selectedCollection, this.collectionItem());
       setTimeout(() => this.cancel(), 100);
     }

@@ -9,11 +9,11 @@ export type Rarity = typeof Rarities[keyof typeof Rarities];
 
 export class CollectionItem {
     id = -1;
-    name = "Green Slime";
-    description = "A default very useful green slime";
-    rarity: Rarity = Rarities.Legendary;
-    image = "img/pngegg-green.png";
-    price = 199;
+    name = "";
+    description = "";
+    rarity: Rarity = Rarities.Common;
+    image = "";
+    price = 0;
 
     copy(){
         return Object.assign(new CollectionItem(), this);

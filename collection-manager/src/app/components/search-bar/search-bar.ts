@@ -14,16 +14,4 @@ export class SearchBar {
   // Inputs
   search = model("Initial Search");
 
-  // Outputs
-  searchButtonClicked: OutputEmitterRef<void> = output<void>({
-    alias: "submit",
-  });
-
-
-
-
-  searchClick() {
-    this.searchButtonClicked.emit();
-  }
-
 }
