@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CollectionItem, Rarities } from '../../models/collection-item';
-import { CollectionService } from '../../services/collection-service';
+import { CollectionService } from '../../services/collection/collection-service';
 import { Collection } from '../../models/collection';
 import { Subscription } from 'rxjs';
 import { CollectionItemCard } from '../../components/collection-item-card/collection-item-card';

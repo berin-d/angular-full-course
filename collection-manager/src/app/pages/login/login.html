@@ -1,0 +1,25 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+  <div class="w-[min(92vw,45rem)] bg-white rounded-xl shadow-md p-6 sm:p-8 border-gray-200 border">
+    <form (submit)="login()" [formGroup]="loginFormGroup" class="flex flex-col gap-3">
+      <h3 class="text-xl font-semibold mb-2">Login</h3>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" />
+        @if (isFieldValid('username')) {
+          <mat-error>Username is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        @if (isFieldValid('password')) {
+          <mat-error>Password is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="w-full" [disabled]="loginFormGroup.invalid">Login</button>
+    </form>
+  </div>
+</div>

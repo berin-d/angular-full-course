@@ -3,6 +3,7 @@ import { CollectionDetail } from './pages/collection-detail/collection-detail';
 import { CollectionItemDetail } from './pages/collection-item-detail/collection-item-detail';
 import { NotFound } from './pages/not-found/not-found';
 import { CollectionItem } from './models/collection-item';
+import { Login } from './pages/login/login';
 
 export const routes: Routes = [
   {
@@ -10,6 +11,10 @@ export const routes: Routes = [
 
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path:'login',
+    component: Login,
   },
   {
     path: 'home',
